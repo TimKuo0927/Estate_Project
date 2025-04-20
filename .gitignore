@@ -1,0 +1,10 @@
+Backend/Backend/bin/
+Backend/Backend/obj/
+Backend/Backend/*.db
+Backend/Backend/*.user
+Backend/Backend/*.suo
+Backend/Backend/*.vs/
+Backend/Backend/.env
+Backend/Backend/appsettings.*.json
+Backend/Backend/appsettings.json
+Backend/.vs/
