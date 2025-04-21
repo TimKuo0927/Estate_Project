@@ -1,4 +1,5 @@
 using Backend.Models;
+using Backend.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<MaindbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Maindb")));
+
+builder.Services.AddScoped<EmployeeService>();
 
 var app = builder.Build();
 

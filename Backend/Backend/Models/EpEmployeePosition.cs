@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Models;
 
-[Table("EP_employee_position_id")]
-public partial class EpEmployeePositionId
+[Table("EP_employee_position")]
+public partial class EpEmployeePosition
 {
     [Key]
     [Column("position_id")]

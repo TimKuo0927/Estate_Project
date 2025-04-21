@@ -17,7 +17,7 @@ public partial class MaindbContext : DbContext
 
     public virtual DbSet<EpEmployee> EpEmployees { get; set; }
 
-    public virtual DbSet<EpEmployeePositionId> EpEmployeePositionIds { get; set; }
+    public virtual DbSet<EpEmployeePosition> EpEmployeePositionIds { get; set; }
 
     public virtual DbSet<EpEstate> EpEstates { get; set; }
 
@@ -40,7 +40,7 @@ public partial class MaindbContext : DbContext
             entity.HasOne(d => d.Position).WithMany(p => p.EpEmployees).HasConstraintName("FK__EP_employ__posit__6B24EA82");
         });
 
-        modelBuilder.Entity<EpEmployeePositionId>(entity =>
+        modelBuilder.Entity<EpEmployeePosition>(entity =>
         {
             entity.HasKey(e => e.PositionId).HasName("PK__employee__99A0E7A4F72D3F2E");
         });

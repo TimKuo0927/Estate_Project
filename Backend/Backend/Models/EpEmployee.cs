@@ -52,5 +52,5 @@ public partial class EpEmployee
 
     [ForeignKey("PositionId")]
     [InverseProperty("EpEmployees")]
-    public virtual EpEmployeePositionId? Position { get; set; }
+    public virtual EpEmployeePosition? Position { get; set; }
 }
