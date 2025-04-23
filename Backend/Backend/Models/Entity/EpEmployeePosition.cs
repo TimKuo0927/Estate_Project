@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Models;
+namespace Backend.Models.Entity;
 
 [Table("EP_employee_position")]
 public partial class EpEmployeePosition

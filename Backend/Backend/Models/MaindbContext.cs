@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Backend.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Models;

@@ -1,4 +1,4 @@
-﻿using Backend.Models;
+﻿using Backend.Models.Entity;
 using Backend.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

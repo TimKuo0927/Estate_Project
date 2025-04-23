@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Models;
+namespace Backend.Models.Entity;
 
 [Table("EP_employee")]
 [Index("EmployeeEmail", Name = "UQ__EP_emplo__0A874BCFB0C4403D", IsUnique = true)]

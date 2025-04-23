@@ -13,6 +13,8 @@ builder.Services.AddDbContext<MaindbContext>(options =>
 
 builder.Services.AddScoped<EmployeeService>();
 
+builder.Services.AddScoped<EstateService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
