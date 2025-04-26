@@ -201,6 +201,41 @@ namespace Backend.Service
             return estateImgList;
         }
 
+        public bool DeleteEstate(string estateId)
+        {
+            try
+            {
+                var epEstate = _context.EpEstates.Where(x => x.EstateId == estateId && x.IsDelete == false).FirstOrDefault();
+                if (epEstate != null)
+                {
+                    epEstate.IsDelete = true;
+                    epEstate.Timestamp = DateTime.Now;
+
+                    var epEstateDetails = _context.EpEstateDetails.Where(x => x.EstateId == estateId && x.IsDelete == false).FirstOrDefault();
+                    if (epEstateDetails != null)
+                    {
+                        epEstateDetails.IsDelete = true;
+                        epEstateDetails.Timestamp = DateTime.Now;
+                    }
+
+                    var epEstateImg = _context.EpEstateImgs.Where(x => x.EstateId == estateId && x.IsDelete == false).FirstOrDefault();
+                    if (epEstateImg != null)
+                    {
+                        epEstateImg.IsDelete = true;
+                        epEstateImg.Timestamp = DateTime.Now;
+                    }
+
+                    _context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex) {
+                Console.WriteLine($"Error updating estate: {ex.Message}");
+                throw;
+            }
+            return false;
+        }
+
 
 
         public string GenerateEstateId()

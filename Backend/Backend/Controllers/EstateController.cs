@@ -30,8 +30,24 @@ namespace Backend.Controllers
             return Ok(estate);
         }
 
+        [HttpPost("updateEstate")]
+        public ActionResult<Estate> updateEstate([FromBody] Estate estate)
+        {
+            var result = _estateService.UpdateEstate(estate);
+
+            return Ok(result);
+        }
+
+        [HttpPost("delEstate")]
+        public ActionResult<Estate> delEstate([FromBody] string estateId)
+        {
+            var result = _estateService.DeleteEstate(estateId);
+
+            return Ok(result);
+        }
+
         [HttpPost("updateImg")]
-        public ActionResult<List<EstateImg>> updateEstatImage([FromBody] List<EstateImg> EstateImgList)
+        public ActionResult<List<EstateImg>> updateEstateImage([FromBody] List<EstateImg> EstateImgList)
         {
             var result = _estateService.UpdateEstateImg(EstateImgList);
 
