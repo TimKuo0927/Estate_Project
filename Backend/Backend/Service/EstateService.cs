@@ -129,7 +129,10 @@ namespace Backend.Service
                     var epEstateDetail = _context.EpEstateDetails.Where(x => x.EstateId == estate.EstateId).FirstOrDefault();
                     if(epEstateDetail != null && estate.estateDetail!=null)
                     {
-                        epEstateDetail = estate.estateDetail;
+                        epEstateDetail.DetailLatitude = estate.estateDetail.DetailLatitude;
+                        epEstateDetail.DetailNumGarage = estate.estateDetail.DetailNumGarage;
+                        epEstateDetail.DetailNumBathroom = estate.estateDetail.DetailNumBathroom;
+                        epEstateDetail.DetailNumBedroom = estate.estateDetail.DetailNumBedroom;
                         epEstateDetail.Timestamp = DateTime.Now;
                         epEstateDetail.IsDelete = false;
                     }
@@ -169,7 +172,7 @@ namespace Backend.Service
                 {
                     // Try to fetch
                     var existing = _context.EpEstateImgs
-                                           .FirstOrDefault(x => x.ImgId == img.ImgId);
+                                           .Find(img.ImgId);
 
                     if (existing != null)
                     {
@@ -218,11 +221,11 @@ namespace Backend.Service
                         epEstateDetails.Timestamp = DateTime.Now;
                     }
 
-                    var epEstateImg = _context.EpEstateImgs.Where(x => x.EstateId == estateId && x.IsDelete == false).FirstOrDefault();
-                    if (epEstateImg != null)
+                    var epEstateImgs = _context.EpEstateImgs.Where(x => x.EstateId == estateId && x.IsDelete == false).ToList();
+                    foreach (var img in epEstateImgs)
                     {
-                        epEstateImg.IsDelete = true;
-                        epEstateImg.Timestamp = DateTime.Now;
+                        img.IsDelete = true;
+                        img.Timestamp = DateTime.Now;
                     }
 
                     _context.SaveChanges();
