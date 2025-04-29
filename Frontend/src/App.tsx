@@ -25,7 +25,7 @@ function App() {
       </div>
       <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
       <h2 className="text-3xl font-bold underline bg-blue-700">Hello world!</h2>
-      <button className="bg-amber-400" >a</button>
+      <button className="bg-amber-400">a</button>
     </>
   );
 }
