@@ -38,7 +38,17 @@ namespace Backend.Service
                                   EstateZip = e.EstateZip,
                                   IsDelete = e.IsDelete,
                                   Timestamp = e.Timestamp,
-                                  estateDetail = detail,
+                                  estateDetail =
+                                  {
+                                      EstateId = estateId,
+                                      DetailId = detail.DetailId,
+                                      DetailLatitude = detail.DetailLatitude,
+                                      DetailNumBathroom = detail.DetailNumBathroom, 
+                                      DetailNumBedroom = detail.DetailNumBedroom,
+                                      DetailNumGarage = detail.DetailNumGarage,
+                                      IsDelete = detail.IsDelete,
+                                      Timestamp = detail.Timestamp,
+                                  },
                                   estateImgList = _context.EpEstateImgs
                                                          .Where(img => img.EstateId == estateId)
                                                          .ToList()
@@ -65,9 +75,10 @@ namespace Backend.Service
                 // CREATE new estate
                 if (string.IsNullOrEmpty(estate.EstateId))
                 {
+                    var EstateId = GenerateEstateId();
                     var epEstate = new EpEstate
                     {
-                        EstateId = GenerateEstateId(),
+                        EstateId = EstateId,
                         EstateAddress = estate.EstateAddress,
                         EstateCity = estate.EstateCity,
                         EstateState = estate.EstateState,
@@ -92,9 +103,15 @@ namespace Backend.Service
                     // 2. Save estate details
                     if (estate.estateDetail != null)
                     {
-                        var epDetail = estate.estateDetail;
-                        epDetail.EstateId = epEstate.EstateId;
-                        _context.EpEstateDetails.Add(epDetail);
+                        EpEstateDetail epEstateDetail = new EpEstateDetail();
+                        epEstateDetail.EstateId = EstateId;
+                        epEstateDetail.DetailNumGarage = estate.estateDetail.DetailNumGarage;
+                        epEstateDetail.DetailLatitude = estate.estateDetail.DetailLatitude;
+                        epEstateDetail.DetailNumBathroom = estate.estateDetail.DetailNumBathroom;
+                        epEstateDetail.DetailNumBedroom = estate.estateDetail.DetailNumBedroom;
+                        epEstateDetail.IsDelete = false;
+                        epEstateDetail.Timestamp = DateTime.Now;
+                        _context.EpEstateDetails.Add(epEstateDetail);
                         _context.SaveChanges();
                     }
 
@@ -239,7 +256,18 @@ namespace Backend.Service
             return false;
         }
 
+        public List<string> GetHomepageImgs()
+        {
+            //Add .AsNoTracking() for performance (if just reading data)
+            var imageList = (from x in _context.EpHomepageImgs.AsNoTracking()
+                             join y in _context.EpEstateImgs.AsNoTracking()
+                             on x.ImageId equals y.ImgId
+                             where !x.IsDelete && !y.IsDelete
+                             select y.ImgUrl).ToList();
 
+
+            return imageList;
+        }
 
         public string GenerateEstateId()
         {

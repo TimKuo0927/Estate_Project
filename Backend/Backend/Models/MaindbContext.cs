@@ -30,6 +30,8 @@ public partial class MaindbContext : DbContext
 
     public virtual DbSet<EpUserFavorite> EpUserFavorites { get; set; }
 
+    public virtual DbSet<EpHomepageImg> EpHomepageImgs { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<EpEmployee>(entity =>
@@ -89,6 +91,25 @@ public partial class MaindbContext : DbContext
             entity.HasOne(d => d.Estate).WithMany(p => p.EpUserFavorites).HasConstraintName("FK__EP_favori__estat__6477ECF3");
 
             entity.HasOne(d => d.User).WithMany(p => p.EpUserFavorites).HasConstraintName("FK__EP_favori__useri__6383C8BA");
+        });
+
+        modelBuilder.Entity<EpHomepageImg>(entity =>
+        {
+            entity.ToTable("EP_homepage_img");
+
+            entity.HasKey(e => e.Id).HasName("PK_EP_homepage_img");
+
+            entity.Property(e => e.Timestamp).HasDefaultValueSql("(getdate())");
+
+            entity.HasOne(e => e.Image)
+                .WithMany()
+                .HasForeignKey(e => e.ImageId)
+                .HasConstraintName("FK_EP_homepage_img_EP_estate_img");
+
+            entity.HasOne(e => e.Employee)
+                .WithMany()
+                .HasForeignKey(e => e.InsertUser)
+                .HasConstraintName("FK_EP_homepage_img_EP_employee");
         });
 
         OnModelCreatingPartial(modelBuilder);

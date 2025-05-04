@@ -20,7 +20,7 @@ namespace Backend.Controllers
         [HttpGet("{estateId}")]
         public ActionResult<Estate> GetEstate(string estateId)
         {
-            var estate =  _estateService.GetEstate(estateId);
+            var estate = _estateService.GetEstate(estateId);
 
             if (estate == null)
             {
@@ -52,6 +52,14 @@ namespace Backend.Controllers
             var result = _estateService.UpdateEstateImg(EstateImgList);
 
             return Ok(result);
+        }
+
+        [HttpGet("getHomepageImgs")]
+        public ActionResult<List<string>> GetHomePageImgs()
+        {
+            var imageList = _estateService.GetHomepageImgs();
+
+            return Ok(imageList);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Backend.Models.Model
         public bool? IsDelete { get; set; }
 
         public List<EpEstateImg>? estateImgList { get; set; }
-        public EpEstateDetail? estateDetail { get; set; }
+        public EstateDetail estateDetail { get; set; }
 
     }
 }
