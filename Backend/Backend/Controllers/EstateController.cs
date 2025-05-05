@@ -1,4 +1,5 @@
-﻿using Backend.Models.Entity;
+﻿using Backend.Models.DTO;
+using Backend.Models.Entity;
 using Backend.Models.Model;
 using Backend.Service;
 using Microsoft.AspNetCore.Http;
@@ -55,7 +56,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("getHomepageImgs")]
-        public ActionResult<List<string>> GetHomePageImgs()
+        public ActionResult<List<ImageLinkDTO>> GetHomePageImgs()
         {
             var imageList = _estateService.GetHomepageImgs();
 

@@ -2,6 +2,7 @@
 using Backend.Models;
 using Backend.Models.Model;
 using Microsoft.EntityFrameworkCore;
+using Backend.Models.DTO;
 
 namespace Backend.Service
 {
@@ -256,14 +257,18 @@ namespace Backend.Service
             return false;
         }
 
-        public List<string> GetHomepageImgs()
+        public List<ImageLinkDTO> GetHomepageImgs()
         {
             //Add .AsNoTracking() for performance (if just reading data)
             var imageList = (from x in _context.EpHomepageImgs.AsNoTracking()
                              join y in _context.EpEstateImgs.AsNoTracking()
                              on x.ImageId equals y.ImgId
                              where !x.IsDelete && !y.IsDelete
-                             select y.ImgUrl).ToList();
+                             select new ImageLinkDTO
+                             {
+                                 EstateId = y.EstateId,
+                                 ImgUrl = y.ImgUrl
+                             }).ToList();
 
 
             return imageList;
