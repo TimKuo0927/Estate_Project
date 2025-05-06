@@ -33,5 +33,7 @@ Frontend/*.ntvs*
 Frontend/*.njsproj
 Frontend/*.sln
 Frontend/*.sw?
+Frontend/.env
 
 *storybook.log
+node_modules

@@ -2,9 +2,16 @@ import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
+import backendConnector from '../src/api';
+
+async function testApi() {
+  const imgs = await backendConnector.estate.getHomepageImgs();
+  console.log(imgs);
+}
 
 function App() {
   const [count, setCount] = useState(0);
+  testApi();
 
   return (
     <>

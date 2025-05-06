@@ -15,9 +15,23 @@ builder.Services.AddScoped<EmployeeService>();
 
 builder.Services.AddScoped<EstateService>();
 
+//Add CORS policy before Build()
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173", "https://localhost:5173") // <== your frontend origins
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();
 
