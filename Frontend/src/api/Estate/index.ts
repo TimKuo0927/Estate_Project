@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { EstateImage } from '../../../model/estate/EstateImage';
 
 export class EstateApi {
   private baseUrl: string;
@@ -7,7 +8,7 @@ export class EstateApi {
     this.baseUrl = baseUrl + '/Estate';
   }
 
-  async getHomepageImgs(): Promise<string[]> {
+  async getHomepageImgs(): Promise<EstateImage[]> {
     const res = await axios.get(`${this.baseUrl}/getHomepageImgs`);
     return res.data;
   }
