@@ -3,9 +3,16 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'danger' | 'outline';
   onClick?: () => void;
   disabled?: boolean;
+  className?: string;
 }
 
-function Button({ label, variant = 'primary', onClick, disabled = false }: ButtonProps) {
+function Button({
+  label,
+  variant = 'primary',
+  onClick,
+  disabled = false,
+  className = '',
+}: ButtonProps) {
   const baseClasses = 'font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline';
 
   let variantClass = '';
@@ -20,7 +27,9 @@ function Button({ label, variant = 'primary', onClick, disabled = false }: Butto
   return (
     <button
       type="button"
-      className={`${baseClasses} ${variantClass} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+      className={`${baseClasses} ${variantClass} ${
+        disabled ? 'opacity-50 cursor-not-allowed' : ''
+      } ${className}`}
       onClick={onClick}
       disabled={disabled}
     >
