@@ -20,6 +20,8 @@ builder.Services.AddScoped<EstateService>();
 
 builder.Services.AddScoped<JwtService>();
 
+builder.Services.AddScoped<UserService>();
+
 //Add CORS policy before Build()
 builder.Services.AddCors(options =>
 {
@@ -33,8 +35,9 @@ builder.Services.AddCors(options =>
 });
 
 //add Jwt authorize 
-var jwtKey = builder.Configuration["Jwt:Key"];
-var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var jwtIssuer = jwtSettings["Issuer"];
+var jwtKey = jwtSettings["Key"];
 
 builder.Services.AddAuthentication(options =>
 {

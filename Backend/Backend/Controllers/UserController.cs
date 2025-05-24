@@ -1,4 +1,5 @@
-﻿using Backend.Service;
+﻿using Backend.Models.Entity;
+using Backend.Service;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,12 +20,27 @@ namespace Backend.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest req)
         {
-            var user = _userService.ValidateUser(req.Email, req.Password);
-            if (user == null) return Unauthorized();
+            var UserEmail = _userService.ValidateUser(req.Email, req.Password);
+            if (UserEmail == null) return Unauthorized();
 
-            var token = _jwtService.GenerateToken(user.UserEmail.ToString());
+            var token = _jwtService.GenerateToken(UserEmail.ToString());
 
             return Ok(new { token });
+        }
+
+        [HttpPost("addNewUser")]
+        public ActionResult<bool> AddNewUser([FromBody] EpUser userData)
+        {
+            var result = _userService.AddNewUser(userData);
+
+            if (result)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return StatusCode(500, false);
+            }
         }
     }
 }

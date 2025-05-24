@@ -1,4 +1,5 @@
 ﻿using Backend.Models;
+using Backend.Models.Entity;
 using Backend.Models.Model;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
@@ -14,41 +15,84 @@ namespace Backend.Service
             _context = context;
         }
 
-        public User? ValidateUser(string email, string password)
+        public string? ValidateUser(string email, string password)
         {
             var userData = (from x in _context.EpUsers
-                           where x.UserEmail == email
-                           select new User{
-                           UserEmail= x.UserEmail,
-                           UserFullName= x.UserFullName,
-                           Userid= x.Userid,
-                           UserPhone  = x.UserPhone,
-                           UserPreferName = x.UserPreferName,
-                           PasswordHash = x.PasswordHash,
-                           }).FirstOrDefault();
-            if (userData == null) {
-                return null;
-            }
-            if (hashPassword(password) ==userData.PasswordHash) {
-                return userData;
+                            where x.UserEmail == email
+                            select new
+                            {
+                                x.Userid,
+                                x.UserEmail,
+                                x.PasswordHash,
+                                x.PasswordSalt
+                            }).FirstOrDefault();
+
+            if (userData == null) return null;
+
+            var (hash, _) = HashPassword(password, userData.PasswordSalt);
+
+            if (hash == userData.PasswordHash)
+            {
+                return userData.UserEmail;
             }
 
             return null;
         }
 
-        public string hashPassword(string password) {
-            //byte[] salt = RandomNumberGenerator.GetBytes(128 / 8); // divide by 8 to convert bits to bytes
-        
+        public bool AddNewUser(EpUser epUser)
+        {
+            try
+            {
+                if (epUser.Userid != 0 && _context.EpUsers.Any(u => u.UserEmail == epUser.UserEmail))
+                {
+                    Console.WriteLine("User with this email already exists.");
+                    return false;
+                }
 
-            // derive a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
+                epUser.IsDelete = false;
+                epUser.Timestamp = DateTime.Now;
+
+                var (hash, salt) = HashPassword(epUser.PasswordHash);
+                epUser.PasswordHash = hash;
+                epUser.PasswordSalt = salt;
+
+                _context.EpUsers.Add(epUser);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding user: {ex.Message}");
+                return false;
+            }
+        }
+
+
+
+        public (string Hash, string Salt) HashPassword(string password, string? salt = null)
+        {
+            byte[] saltBytes;
+
+            if (string.IsNullOrEmpty(salt))
+            {
+                saltBytes = RandomNumberGenerator.GetBytes(16); // 128-bit salt
+            }
+            else
+            {
+                saltBytes = Convert.FromBase64String(salt);
+            }
+
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password!,
-                 //salt: salt,
-                salt: new byte[0],
+                password: password,
+                salt: saltBytes,
                 prf: KeyDerivationPrf.HMACSHA256,
                 iterationCount: 100000,
-                numBytesRequested: 256 / 8));
-            return hashed;
+                numBytesRequested: 32 // 256 bits
+            ));
+
+            return (hashed, Convert.ToBase64String(saltBytes));
         }
+
     }
 }

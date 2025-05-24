@@ -13,10 +13,6 @@ namespace Backend.Models.Model
 
         public string UserEmail { get; set; }
 
-        public string PasswordHash { get; set; }
-
         public string UserPhone { get; set; }
-
-        public DateTime? Timestamp { get; set; }
     }
 }

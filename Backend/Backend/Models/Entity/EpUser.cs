@@ -40,6 +40,9 @@ public partial class EpUser
     [Column("isDelete")]
     public bool IsDelete { get; set; }
 
+    [Column("passwordSalt")]
+    public string? PasswordSalt { get; set; }
+
     [InverseProperty("User")]
     public virtual ICollection<EpUserFavorite> EpUserFavorites { get; set; } = new List<EpUserFavorite>();
 }
