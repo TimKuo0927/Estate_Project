@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import Button from '../../component/Button/Button';
-import { UserLogin } from '../../../model/User/index';
-import backendConnector from '../../api';
+import Button from '../../../component/Button/Button';
+import { UserLogin } from '../../../../model/User/index';
+import backendConnector from '../../../api';
 
-function SignInPage() {
+function SignUpPage() {
   const [userData, setUserData] = useState<UserLogin>({
     Email: '',
     Password: '',
@@ -27,8 +27,8 @@ function SignInPage() {
   };
 
   return (
-    <div className="bg-[#DADADA] h-[55vh] m-3 p-3 grid grid-flow-col grid-rows-3 gap-4">
-      <strong className="text-4xl row-span-1 flex justify-center items-center">SIGN IN</strong>
+    <>
+      <strong className="text-4xl row-span-1 flex justify-center items-center">SIGN UP</strong>
 
       <div className="row-span-1 flex flex-col items-center space-y-2">
         <input
@@ -51,14 +51,14 @@ function SignInPage() {
 
       <div className="row-span-1 flex flex-col items-center space-y-2">
         <div className="w-3/5">
-          <Button label={'Sign In'} className="w-full" onClick={handleLogin} />
+          <Button label={'Create Account'} className="w-full" onClick={handleLogin} />
         </div>
         <div className="w-3/5">
-          <Button label={'Sign Up'} className="w-full" />
+          <Button label={'Back to Sign In'} className="w-full" />
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
-export default SignInPage;
+export default SignUpPage;
