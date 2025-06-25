@@ -1,7 +1,9 @@
 ﻿using Backend.Models.Entity;
 using Backend.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Backend.Controllers
 {
@@ -41,6 +43,14 @@ namespace Backend.Controllers
             {
                 return StatusCode(500, false);
             }
+        }
+
+        [Authorize]
+        [HttpGet("userData")]
+        public IActionResult GetUserData()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return Ok($"{userId}");
         }
     }
 }

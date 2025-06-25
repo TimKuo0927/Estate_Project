@@ -20,8 +20,8 @@ function SignInPage({ SetStatus }: SignInPageProps) {
   const handleLogin = async () => {
     try {
       const token = await backendConnector.user.login(userData);
-      // console.log(token)
-      localStorage.setItem('token', token);
+      console.log(token.token);
+      localStorage.setItem('token', token.token);
     } catch (err) {
       console.log('Login error');
       console.error(err);
