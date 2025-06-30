@@ -6,3 +6,11 @@ export interface UserLogin {
 export interface userData{
     token:string;
 }
+
+export interface userCreate{
+    UserFullName:string;
+    UserPreferName:string;
+    UserEmail:string;
+    PasswordHash:string;
+    UserPhone:string;
+}

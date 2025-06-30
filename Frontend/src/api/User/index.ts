@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { UserLogin, userData } from '../../../model/User/index';
+import { UserLogin, userData, userCreate } from '../../../model/User/index';
 
 export class UserApi {
   private baseUrl: string;
@@ -21,6 +21,11 @@ export class UserApi {
     };
     console.log('Authorization Header:', 'Bearer ' + localStorage.getItem('token'));
     const res = await axios.get(`${this.baseUrl}/userData`, config);
+    return res.data;
+  }
+
+  async AddNewUser(userCreate: userCreate): Promise<boolean> {
+    const res = await axios.post(`${this.baseUrl}/addNewUser`, userCreate);
     return res.data;
   }
 }
