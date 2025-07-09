@@ -24,6 +24,7 @@ function SignInPage({ SetStatus }: SignInPageProps) {
       const token = await backendConnector.user.login(userData);
       console.log(token.token);
       localStorage.setItem('token', token.token);
+      window.location.href = '/'; // force full reload
     } catch (err) {
       console.log('Login error');
       console.error(err);

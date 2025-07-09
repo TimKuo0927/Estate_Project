@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { UserLogin, userData, userCreate } from '../../../model/User/index';
+import { UserLogin, userData, userCreate, userToken } from '../../../model/User/index';
 
 export class UserApi {
   private baseUrl: string;
@@ -8,12 +8,12 @@ export class UserApi {
     this.baseUrl = baseUrl + '/User';
   }
 
-  async login(userData: UserLogin): Promise<userData> {
+  async login(userData: UserLogin): Promise<userToken> {
     const res = await axios.post(`${this.baseUrl}/login`, userData);
     return res.data;
   }
 
-  async GetUserData(): Promise<string> {
+  async GetUserData(): Promise<userData> {
     var config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),

@@ -2,8 +2,14 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { userData } from '../../../model/User';
 
-function ClientLayout() {
+interface ClientLayoutProps {
+  isLogin: boolean;
+  userData: userData;
+}
+
+function ClientLayout({ isLogin, userData }: ClientLayoutProps) {
   const navigate = useNavigate();
 
   const renderHomePage = () => {
@@ -17,7 +23,12 @@ function ClientLayout() {
   return (
     <>
       <div className="top-0 w-full">
-        <Header HomeOnClick={renderHomePage} SignOnClick={renderSignPage} />
+        <Header
+          HomeOnClick={renderHomePage}
+          SignOnClick={renderSignPage}
+          isLogin={isLogin}
+          userData={userData}
+        />
       </div>
       <div className="grid grid-cols-10">
         <div className="col-start-1 col-end-3"></div>

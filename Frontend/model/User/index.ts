@@ -3,7 +3,7 @@ export interface UserLogin {
     Password: string;
 }
 
-export interface userData{
+export interface userToken{
     token:string;
 }
 
@@ -12,5 +12,13 @@ export interface userCreate{
     UserPreferName:string;
     UserEmail:string;
     PasswordHash:string;
+    UserPhone:string;
+}
+
+export interface userData{
+    Userid:number;
+    UserFullName:string;
+    UserPreferName:string;
+    UserEmail:string;
     UserPhone:string;
 }
