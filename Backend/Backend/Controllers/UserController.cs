@@ -49,8 +49,9 @@ namespace Backend.Controllers
         [HttpGet("userData")]
         public IActionResult GetUserData()
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return Ok($"{userId}");
+            var userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userData = _userService.GetUserByEmail(userEmail);
+            return Ok(userData);
         }
     }
 }

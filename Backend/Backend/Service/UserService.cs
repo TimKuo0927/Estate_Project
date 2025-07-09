@@ -39,6 +39,21 @@ namespace Backend.Service
             return null;
         }
 
+        public User? GetUserByEmail(string email)
+        {
+            var user = _context.EpUsers.FirstOrDefault(u => u.UserEmail == email);
+            if (user == null) return null;
+            return new User
+            {
+                //dont return password hash or salt
+                Userid = user.Userid,
+                UserFullName = user.UserFullName,
+                UserPreferName = user.UserPreferName,
+                UserEmail = user.UserEmail,
+                UserPhone = user.UserPhone
+            };
+        }
+
         public bool AddNewUser(EpUser epUser)
         {
             try
